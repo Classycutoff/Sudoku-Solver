@@ -1,7 +1,7 @@
 # Sudoku Solver
 
 
-This is my template for Python projects. I have created many small projects, so this helps me to make the projects at the start.
+This is my template for a simple Sudoku Solver made in Python.
 
 
 ## Repo Structure
