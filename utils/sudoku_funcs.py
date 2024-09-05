@@ -1,8 +1,8 @@
 import math
 
 import utils._global as _global
-from utils.set_values import set_possible_vals_grid, set_single_value
-from utils.check_funcs import check_if_box_has_possible_single_values, check_if_cell_has_one_possible_answer, check_if_solved
+from utils.set_values import set_possible_vals_grid, set_single_value, set_vals_box, set_vals_row_and_cols
+from utils.check_funcs import check_if_cell_has_one_possible_answer, check_if_solved
 from utils.print_funcs import set_print
 
 
@@ -21,10 +21,9 @@ def loop_through_possible_vals(grid) -> tuple[bool, list]:
                     # set_print(_global.possible_vals_grid[row][col][0], row, col)
                     set_single_value(grid, _global.possible_vals_grid[row][col][0], row, col)
 
-        result_single_val = check_if_box_has_possible_single_values()
-        for val, (row, col) in result_single_val:
-            # set_print(val, row, col)
-            set_single_value(grid, val, row, col)
+        grid = set_vals_box(grid)
+        grid = set_vals_row_and_cols(grid)
+
         set_possible_vals_grid(grid)
         if check_if_solved(grid):
             return True, grid

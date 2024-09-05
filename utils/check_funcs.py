@@ -23,6 +23,15 @@ def check_if_cell_has_one_possible_answer(row, col):
     return False
 
 
+def _get_single_val_list(single_val_dict):
+    single_possible_val_list = []
+    for key, grid_index in single_val_dict.items():
+        if not grid_index:
+            continue
+        single_possible_val_list.append((key, grid_index))
+
+    return single_possible_val_list
+
 def _check_box(box):
     val_count = {}
     for row in range(len(box)):
@@ -41,16 +50,10 @@ def _check_box(box):
                     val_count[cell_val] = (row, col)
                     continue
 
-    single_possible_val = []
-    for key, grid_index in val_count.items():
-        if not grid_index:
-            continue
-        single_possible_val.append((key, grid_index))
-
-    return single_possible_val
+    return _get_single_val_list(val_count)
 
 
-def check_if_box_has_possible_single_values() -> list[int, tuple[int, int]]:
+def check_if_box_has_possible_single_vals() -> list[int, tuple[int, int]]:
     result_single_val = []
     box_amount = int(math.sqrt(len(_global.possible_vals_grid)))
     for box_row in range(box_amount):
@@ -68,3 +71,42 @@ def check_if_box_has_possible_single_values() -> list[int, tuple[int, int]]:
                 # print(f'Row: {row}, col: {col}, val: {val}')
         
     return result_single_val
+
+def _check_row_helper(is_row: bool, index: int):
+    row_single_vals = {}
+    for i in range(len(_global.possible_vals_grid)):
+        if is_row:
+            index_dict = {'row': index, 'col': i}
+        else:
+            index_dict = {'row': i, 'col': index}
+
+        possible_cell_vals = _global.possible_vals_grid[index_dict['row']][index_dict['col']]
+
+        if not possible_cell_vals:
+            continue
+        for val in possible_cell_vals:
+            if val in row_single_vals:
+                row_single_vals[val] = False
+                continue
+
+            if is_row:
+                row_single_vals[val] = (index_dict['row'], index_dict['col'])
+
+
+    return _get_single_val_list(row_single_vals)
+
+
+def check_if_row_or_columns_has_possible_vals():
+    single_cells_to_be_filled = []
+    for i in range(len(_global.possible_vals_grid)):
+        row_single_val_list = _check_row_helper(is_row=True, index=i)
+        single_cells_to_be_filled.extend(row_single_val_list)
+
+        col_single_val_list = _check_row_helper(is_row=False, index=i)
+        single_cells_to_be_filled.extend(col_single_val_list)
+
+    # print(single_cells_to_be_filled)
+    return single_cells_to_be_filled
+
+                
+

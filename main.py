@@ -22,8 +22,8 @@ test_grid = [
 
 solved_grid = [
     [2,5,8,7,3,6,9,4,1],
-    [6,1,0,9,2,4,3,5,7],
-    [4,3,7,0,1,5,2,6,8],
+    [6,1,9,8,2,4,3,5,7],
+    [4,3,7,9,1,5,2,6,8],
     [3,9,5,2,7,1,4,8,6],
     [7,6,2,4,9,8,1,3,5],
     [8,4,1,6,5,3,7,2,9],
@@ -41,6 +41,9 @@ def main(grid=test_grid):
     # print(_global.check_if_cell_has_one_possible)
 
     print_sudoku_grid(result_grid)
+
+    if result_grid == solved_grid:
+        print('Matches the solved grid.')
 
 
 
