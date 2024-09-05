@@ -1,0 +1,1 @@
+# _global.py is where I store global variables that are needed all over the place in my funcs. This way I can make sure that they are easily changeable and easily retrievable.
